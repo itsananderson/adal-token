@@ -10,9 +10,10 @@ var defaults = require('lodash').defaults;
 var home = process.env.HOME || process.env.USERPROFILE;
 var configPath = home + '/adal-token-config.json';
 
-var environments = {};
+var config = {envs:{}};
+
 if (fileExists(configPath)) {
-    environments = require(configPath).envs;
+    config = require(configPath);
 }
 
 program
@@ -69,8 +70,9 @@ adal.Logging.setLoggingOptions({
 });
 
 if (program.showEnvironments) {
-    console.log('available environments');
-    console.log(environments);
+    Object.keys(config.envs).forEach(function(env) {
+        console.log(env);
+    });
     return;
 }
 
@@ -82,7 +84,7 @@ var authFlags = {
     'endpoint' : program.endpoint
 };
 
-var authDetails = defaults(authFlags, environments[program.env]);
+var authDetails = defaults(authFlags, config.envs[program.env || config.defaultEnv]);
 
 if (authDetails.clientSecret == undefined) {
     console.error('Environment "%s" requires the client secret to be provided as a configuration flag', program.env);
@@ -101,6 +103,7 @@ context.acquireTokenWithClientCredentials(authDetails.resource, authDetails.clie
         console.log(tokenResponse.accessToken);
 
         if (authDetails.endpoint !== "") {
+            console.log('');
             var requestOptions = {
                 'uri': authDetails.endpoint,
                 'auth' : {
@@ -117,9 +120,9 @@ context.acquireTokenWithClientCredentials(authDetails.resource, authDetails.clie
                 if (err) {
                     throw err;
                 }
-                try {
-                    body = JSON.parse(body);
-                } catch(e) {}
+                //try {
+                //    body = JSON.parse(body);
+                //} catch(e) {}
                 console.log(body);
             });
         }
