@@ -1,6 +1,6 @@
 {
   "name": "adal-auth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate ADAL bearer tokens from the CLI",
   "main": "adal-token.js",
   "scripts": {
