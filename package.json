@@ -1,0 +1,20 @@
+{
+  "name": "adal-auth",
+  "version": "0.1.0",
+  "description": "Generate ADAL bearer tokens from the CLI",
+  "main": "adal-token.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "adal-token": "./adal-token.js"
+  },
+  "author": "Will Anderson",
+  "dependencies": {
+    "adal-node": "~0.1.5",
+    "commander": "~2.2.0",
+    "lodash": "^2.4.1",
+    "request": "^2.38.0"
+  },
+  "license": "MIT"
+}
