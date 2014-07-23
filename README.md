@@ -34,3 +34,30 @@ You can send the GET request through Fiddler (so you can drag the request into t
 To see all configuration options, run:
 
 `adal-token --help`
+
+Config File
+-----------
+
+When it starts, adal-token looks for a config in ~/adal-token-config.json. If that file exists, it is loaded, and any pre-configured environments can be used by name.
+
+For example, consider the following config;
+
+```json
+{
+  "defaultEnv": "dev",
+  "envs": {
+    "dev": {
+      "tenant": "<yourtenant>.onmicrosoft.com",
+      "clientId": "00000000-0000-0000-0000-000000000000",
+      "clientSecret": "===your client secret here===",
+      "resource": "http://example.com/resource-youre-requesting-access-to/",
+      "endpoint": "http://example.com/resource-to-send-request-to/"
+    }
+  }
+}
+```
+
+The "envs" key has a map of environment names to configurations.
+The "defaultEnv" key sets a default environment to use if no --env flag is provided.
+
+If you don't want to store sensitive info in your config, you can store everything except your client secret, and then provide that as a command line arg
